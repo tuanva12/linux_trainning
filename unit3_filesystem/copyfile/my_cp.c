@@ -34,9 +34,6 @@ int main(int argc, char* argv[])
   sprintf(src_p, "%s", argv[1]);
   sprintf(des_p, "%s%s", argv[2], file_name);
 
-  // memcpy(src_p, argv[1], strlen(argv[1]));
-  // memcpy(des_p, argv[2], strlen(argv[2]));
-
   fd_s = open(src_p, O_RDONLY);
   if (fd_s < 0)
   {

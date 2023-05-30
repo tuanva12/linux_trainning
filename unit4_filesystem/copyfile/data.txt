@@ -1,9 +1,0 @@
-File management in programming is a task that the programmer must be fluent in. Knowledge of the various open,
-read, and write functions is essential because we always need them to store or dispose the information that are
-stored in files.
-
-In this Linux Hint article, you will learn how to use the write() function to write the files.
-
-We’ll explain everything about this ella, its syntax, the call method, the input and output arguments,
-the type of data it accepts in each case, and how to declare it correctly.
-
