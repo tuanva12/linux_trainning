@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
@@ -41,7 +43,7 @@ int main(int argc, char* argv[])
     return -1;
   }
 
-  fd_d = open(des_p, O_RDWR | O_CREAT);
+  fd_d = open(des_p, O_RDWR | O_CREAT, S_IRWXU);
   if (fd_d < 0)
   {
     printf("can't open destinate file\n");
