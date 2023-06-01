@@ -20,4 +20,6 @@ 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
     Cha phải biết kết quả thực hiện của chương trình con.<br>
 
 ## unit5: Multithread
-- Multithread
+- simple_thread: Vi du khởi tạo multi thread.
+- mutex: Su dung mutex trong multi thread
+- exam_1: Tạo 3 thread, tăng giá trị 1 biến chung và ghi giá trị vào 1 trong 2 file output, sử dụng semafore.
