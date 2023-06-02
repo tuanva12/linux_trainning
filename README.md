@@ -3,6 +3,9 @@
 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
 #
 
+## Refer
+https://github.com/Johannes4Linux/Linux_Driver_Tutorial.git
+#
 
 ## unit1: Hello word file
 ## unit2: Build image for beaglebone black
