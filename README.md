@@ -31,5 +31,10 @@ https://github.com/Johannes4Linux/Linux_Driver_Tutorial.git
 1. hello
 - gcc -o read read.c -lrt
 - gcc -o write write.c -lrt
-2. homework
--
+2. homework: Tạo giả lập server và client, server luôn lắng nghe từ memory shared, client nhận dữ liệu từ bà phím nhập vào tên và tuổi, khi nhập xong gửi tín hiệu tới sever để đọc dữ liệu, ghi vào log file.
+- gcc -o server server.c -lrt
+- gcc -o client client.c -lrt
+
+## unit7: hello kernel
+
+## unit8: character device.
