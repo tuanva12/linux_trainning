@@ -10,6 +10,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <string.h>
+#include <semaphore.h>
 
 /* the size (in bytes) of shared memory object */
 #define SIZE 4096
@@ -26,7 +27,7 @@ int pidServer;
 /* pointer to shared memory obect */
 void* ptr;
 
-
+sem_t* psema;
 
 int main()
 {
@@ -51,22 +52,27 @@ int main()
     /* read pid server */
     pidServer = *(int*)ptr;
 
-    printf("Server id: %d", pidServer);
+    printf("Server id: %d\n", pidServer);
+
+    /* Open named semaphore */
+    psema = sem_open("mysema", O_RDWR);
 
     while(1)
     {
-        printf("\nEnter name: ");
+        printf("Enter name: ");
         scanf("%s", usrdata.name);
-        printf("\nEnter eag: ");
+        printf("Enter eag: ");
         scanf("%d", &usrdata.tuoi);
 
         /* write data to shared memory */
+        sem_wait(psema);
         *(struct data*)(ptr + OFFSET_DATA) = usrdata;
+        sem_post(psema);
 
         /* send signal */
         kill(pidServer, SIGUSR1);
 
-        printf("\nEnd of transmit data\n\n");
+        printf("End of transmit data through memory\n\n");
         sleep(2);
     }
 

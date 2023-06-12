@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <signal.h>
+#include <semaphore.h>
 
 /* the size (in bytes) of shared memory object */
 #define SIZE 4096
@@ -25,16 +26,22 @@ int pidServer;
 /* pointer to shared memory obect */
 void* ptr;
 
+sem_t* psema;
+
+
 /* signal receiver */
 void sig_handler(int signo)
 {
-    struct data *datareceiv;
+    struct data datareceiv;
 
     if (signo == SIGUSR1)
     {
-        datareceiv = (struct data *)(ptr + OFFSET_DATA);
-        printf("\nName: %s", datareceiv->name);
-        printf("\nTuoi: %d\n", datareceiv->tuoi);
+        sem_wait(psema);
+        sleep(15);
+        datareceiv = *(struct data *)(ptr + OFFSET_DATA);
+        sem_post(psema);
+        printf("\nName: %s", datareceiv.name);
+        printf("\nTuoi: %d\n", datareceiv.tuoi);
         printf("Write to log file.\n");
     }
 }
@@ -62,6 +69,9 @@ int main()
 
     /* write process id */
     *(int*)ptr = pidServer;
+
+    /* Open named semaphore */
+    psema = sem_open("mysema", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR, 1);
 
     /* init signal */
     if (signal(SIGUSR1, sig_handler) == SIG_ERR)

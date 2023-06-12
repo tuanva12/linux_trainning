@@ -2,6 +2,9 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "sem.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "time.h": "c",
+        "typeinfo": "c",
+        "type_traits": "c"
     }
 }
