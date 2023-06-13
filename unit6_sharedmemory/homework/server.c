@@ -28,6 +28,7 @@ void* ptr;
 
 sem_t* psema;
 
+FILE *pResult;
 
 /* signal receiver */
 void sig_handler(int signo)
@@ -37,11 +38,14 @@ void sig_handler(int signo)
     if (signo == SIGUSR1)
     {
         sem_wait(psema);
-        sleep(15);
+        // sleep(15);
         datareceiv = *(struct data *)(ptr + OFFSET_DATA);
         sem_post(psema);
-        printf("\nName: %s", datareceiv.name);
-        printf("\nTuoi: %d\n", datareceiv.tuoi);
+        /* open file for writing data result */
+        pResult = fopen("logfile.txt", "a");
+        fprintf(pResult, "Name: %s\n", datareceiv.name);
+        fprintf(pResult, "Tuoi: %d\n", datareceiv.tuoi);
+        fclose(pResult);
         printf("Write to log file.\n");
     }
 }
