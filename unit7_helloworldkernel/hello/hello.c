@@ -13,13 +13,8 @@ MODULE_VERSION("0.1");
 
 int init_module(void)
 {
-    int i = 0;
-    for (i = 0; i < 10; i++)
-    {
-        printk(KERN_INFO "Hello world. \n");
-        mdelay(1000);
-    }
-    
+    printk(KERN_INFO "Hello world. \n");
+ 
     return 0;
 }
 

@@ -1,4 +1,4 @@
-obj-m += hello.o
+obj-m += gpio.o
 
 PWD := $(shell pwd)
 CROSS=/home/caphuong/linux_trainning/bbb/kernelbuildscripts/dl/gcc-8.5.0-nolibc/arm-linux-gnueabi/bin/arm-linux-gnueabi-
