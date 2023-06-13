@@ -1,6 +1,6 @@
 #  linux_trainning
 ## Token
-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
+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
 #
 
 ## Refer
