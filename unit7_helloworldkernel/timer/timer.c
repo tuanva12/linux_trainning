@@ -11,39 +11,34 @@
 #include <linux/delay.h>
 #include <linux/interrupt.h>
 
-#define GPIO_31 (31)
+
+/** variable for timer */
+static struct timer_list my_timer;
+
+void timer_callback(struct timer_list *data)
+{
+    printk(KERN_EMERG "Timer handler.\n");
+    my_timer.expires = jiffies + 3 * HZ;
+    add_timer(&my_timer);
+}
 
 int init_module(void)
 {
-    int i = 10;
-    if (gpio_is_valid(GPIO_31) == false)
-    {
-        pr_err("GPIO %d is not valid\n", GPIO_31);
-        return -1;
-    }
+    printk(KERN_EMERG "Init module.\n");
 
-    if(gpio_request(GPIO_31,"GPIO_31") < 0) {
-        pr_err("ERROR: GPIO %d request\n", GPIO_31);
-        return -1;
-    }
-
-    gpio_direction_output(GPIO_31, 0);
-    gpio_export(GPIO_31, false);
-
-    while(i--) {
-        gpio_set_value(GPIO_31, 1);
-        msleep(1000);
-        gpio_set_value(GPIO_31, 0);
-        msleep(1000);
-    }
+    my_timer.expires = jiffies + 3 * HZ;
+    my_timer.function = timer_callback;
+    // timer_setup(&my_timer, timer_callback, 0);
+    // mod_timer(&my_timer, jiffies + msecs_to_jiffies(5000));
+    add_timer(&my_timer);
 
     return 0;
 }
 
 void cleanup_module(void)
 {
-    gpio_unexport(GPIO_31);
-    gpio_free(GPIO_31);
+    printk(KERN_EMERG "Release module.\n");
+    del_timer(&my_timer);
 }
 
 MODULE_LICENSE("GPL");
