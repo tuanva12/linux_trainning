@@ -1,4 +1,4 @@
-/**************************************************************************************** 
+/****************************************************************************************
  * Include Library
  ****************************************************************************************/
 #include <linux/module.h> /* Needed by all modules */
@@ -20,7 +20,7 @@
 #include <linux/device.h>
 #include <linux/miscdevice.h>
 
-/**************************************************************************************** 
+/****************************************************************************************
  * Definition
  ****************************************************************************************/
 #define GPIO_SETDATAOUT_OFFSET 0x194
@@ -52,7 +52,7 @@ struct container
     uint32_t count;
 };
 
-/**************************************************************************************** 
+/****************************************************************************************
  * Variable
  ****************************************************************************************/
 
@@ -66,10 +66,10 @@ static const struct of_device_id blink_led_of_match[] = {
 struct container *my_container = NULL;
 
 
-/**************************************************************************************** 
+/****************************************************************************************
  * Function implementation
  ****************************************************************************************/
- 
+
 // Ham xu ly timer
 static void timer_function(struct timer_list *t)
 {
@@ -105,13 +105,13 @@ int blink_led_driver_probe(struct platform_device *pdev)
     if(dev == NULL)
     {
         pr_info("dev null\n");
-	      return -1;
+          return -1;
     }
 
     if(np == NULL)
     {
         pr_info("np null\n");
-	      return -1;
+          return -1;
     }
 
 
@@ -120,13 +120,13 @@ int blink_led_driver_probe(struct platform_device *pdev)
     /* Allocate memory */
     my_container = kmalloc(sizeof(struct container), GFP_KERNEL);
     my_container->led_data = kmalloc(sizeof(struct led_driver_data), GFP_KERNEL);
- 
+
     if(my_container == NULL)
     {
         pr_info("my container null\n");
-	      return -1;
+          return -1;
     }
-    
+
     if(my_container->led_data == NULL)
     {
         pr_info("my_container->led_data null\n");
@@ -135,12 +135,12 @@ int blink_led_driver_probe(struct platform_device *pdev)
 
     res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
     pr_info("res->start: %08x res->end: %08x\n", res->start, res->end);
-    
+
     my_container->led_data->base_addr = (uint32_t *)ioremap(res->start, (res->end - res->start));
 
     if (my_container->led_data->base_addr == NULL)
     {
-        pr_info("could not request base address\n");    
+        pr_info("could not request base address\n");
         return -1;
     }
 
@@ -158,7 +158,7 @@ int blink_led_driver_probe(struct platform_device *pdev)
     my_container->led_data->led_config.delta_time = led_config[3];
 
     //Setting output mode for gpio pin
-    reg_data = readl_relaxed(my_container->led_data->base_addr + GPIO_OE_OFFSET);    
+    reg_data = readl_relaxed(my_container->led_data->base_addr + GPIO_OE_OFFSET);
     reg_data &= ~my_container->led_data->led_config.led;
 
     writel_relaxed(reg_data, my_container->led_data->base_addr + GPIO_OE_OFFSET);
@@ -180,7 +180,7 @@ int blink_led_driver_remove(struct platform_device *pdev)
     if (NULL != my_container)
     {
         del_timer_sync(&(my_container->my_timer));
-        
+
         /* Off led */
         writel_relaxed(my_container->led_data->led_config.data_out, my_container->led_data->base_addr + GPIO_CLEARDATAOUT_OFFSET);
 
