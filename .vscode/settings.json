@@ -5,6 +5,7 @@
         "stdio.h": "c",
         "time.h": "c",
         "typeinfo": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "watchdog.h": "c"
     }
 }
